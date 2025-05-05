@@ -1,6 +1,7 @@
 package com.collegeNepal.controller.servlet;
 
 import java.io.IOException;
+
 import java.io.PrintWriter;
 import java.net.URLEncoder;
 import java.sql.SQLException;
@@ -60,10 +61,19 @@ public class LogInController extends HttpServlet {
 							 // Create a session for the logged-in user
 			                HttpSession session = request.getSession();
 			                System.out.println("Session made " + session.getId());
-			                session.setAttribute("user", user);
+			                session.setAttribute("userWithSession", user);
+			                System.out.println(user.getName());
+			                if (session.getAttribute("userWithSession") != null) {
+			                	System.out.println("User exists");
+			                }
+			                
 
 			                // Redirect to the Dashboard or home page (could be a different page based on your setup)
-			                response.sendRedirect(request.getContextPath() + "/Pages/Dashboard.jsp");
+			                if (user.getRole().equals("student")) {
+			                	response.sendRedirect(request.getContextPath() + "/Pages/homePage.jsp");
+			                }else {
+			                response.sendRedirect(request.getContextPath() + "/dashboardController");
+			                }
 			                return;
 					
 			}else {

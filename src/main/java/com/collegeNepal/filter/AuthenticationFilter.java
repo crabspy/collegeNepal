@@ -1,6 +1,6 @@
 package com.collegeNepal.filter;
 
-/*import java.io.IOException;
+import java.io.IOException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -40,13 +40,21 @@ public class AuthenticationFilter implements Filter {
 		boolean isRegisterController = uri.endsWith("RegisterController");
 
 		HttpSession session = req.getSession(false);
+		if (req.getSession(false) == null) {
+			System.out.println("No existing session");
+		}else {
+			System.out.println("Yes existing session");
+		}
 		boolean loggedIn = session != null && session.getAttribute("userWithSession") != null;
+		//System.out.println(session.getAttribute("userWithSession"));
+		
 	
 
 		if (loggedIn) {
 			// Redirect logged-in user away from login page			
 			if (isLoginPage || isLoginController || isRegisterPage || isRegisterController) {
 				System.out.println("THIS MUST BE LOGIN OR LOGINCONTROLLER");
+				System.out.println(session.getAttribute("userWithSession"));
 				res.sendRedirect(contextPath + "/Pages/Dashboard.jsp");
 			} else {
 				System.out.println("THIS MUST NOT BE LOGIN OR LOGINCONTROLLER");
@@ -65,4 +73,3 @@ public class AuthenticationFilter implements Filter {
 		}
 	}
 }
-*/
